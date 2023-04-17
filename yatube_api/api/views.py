@@ -48,7 +48,7 @@ class CommentViewSet(ModelViewSet):
 class FollowView(ListCreateAPIView):
     serializer_class = FollowSerializer
     filter_backends = (SearchFilter,)
-    search_fields = ('following__username',)
+    search_fields = ('user__username', 'following__username')
 
     def get_queryset(self):
         return self.request.user.follower.all()

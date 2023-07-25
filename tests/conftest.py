@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 root_dir_content = os.listdir(BASE_DIR)
-PROJECT_DIR_NAME = 'yatube_api'
+PROJECT_DIR_NAME = 'app'
 
 if (
         PROJECT_DIR_NAME not in root_dir_content

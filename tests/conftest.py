@@ -1,6 +1,8 @@
-import sys
 import os
+import sys
+from pathlib import Path
 
+import pytest
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
@@ -8,11 +10,10 @@ sys.path.append(BASE_DIR)
 root_dir_content = os.listdir(BASE_DIR)
 PROJECT_DIR_NAME = 'app'
 
-if (
-        PROJECT_DIR_NAME not in root_dir_content
-        or not os.path.isdir(os.path.join(BASE_DIR, PROJECT_DIR_NAME))
+if PROJECT_DIR_NAME not in root_dir_content or not os.path.isdir(
+    os.path.join(BASE_DIR, PROJECT_DIR_NAME)
 ):
-    assert False, (
+    pytest.fail(
         f'В директории `{BASE_DIR}` не найдена папка c проектом '
         f'`{PROJECT_DIR_NAME}`. Убедитесь, что у вас верная структура проекта.'
     )
@@ -22,7 +23,7 @@ project_dir_content = os.listdir(MANAGE_PATH)
 FILENAME = 'manage.py'
 
 if FILENAME not in project_dir_content:
-    assert False, (
+    pytest.fail(
         f'В директории `{MANAGE_PATH}` не найден файл `{FILENAME}`. '
         'Убедитесь, что у вас верная структура проекта.'
     )
@@ -35,12 +36,9 @@ pytest_plugins = [
 # test .md
 default_md = '# api_final\napi final\n'
 filename = 'README.md'
-assert filename in root_dir_content, (
-    f'В корне проекта не найден файл `{filename}.`'
-)
+assert (
+    filename in root_dir_content
+), f'В корне проекта не найден файл `{filename}.`'
 
-with open(filename, 'r', errors='ignore') as f:
-    file = f.read()
-    assert file != default_md, (
-        f'Не забудьте оформить `{filename}.`'
-    )
+file = Path(filename).read_text(encoding='utf-8', errors='ignore')
+assert file != default_md, f'Не забудьте оформить `{filename}.`'

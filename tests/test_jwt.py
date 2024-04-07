@@ -9,8 +9,9 @@ class TestJWT:
     url_refresh = '/api/v1/jwt/refresh/'
     url_verify = '/api/v1/jwt/verify/'
 
-    def check_request_with_invalid_data(self, client, url, invalid_data,
-                                        expected_fields):
+    def check_request_with_invalid_data(
+        self, client, url, invalid_data, expected_fields
+    ):
         response = client.post(url)
         assert response.status_code == HTTPStatus.BAD_REQUEST, (
             f'Если POST-запрос, отправленный к `{url}`, не содержит всех '
@@ -40,7 +41,7 @@ class TestJWT:
         for field in fields_invalid:
             assert field in response.json(), (
                 'Убедитесь, что в ответе на POST-запрос без необходимых '
-                'данных, отправленный к `{url}` содержится информация об '
+                f'данных, отправленный к `{url}` содержится информация об '
                 'обязательных для этого эндпоинта полях. Сейчас ответ не '
                 f'содержит информацию о поле `{field}`.'
             )
@@ -48,12 +49,12 @@ class TestJWT:
         invalid_data = (
             {
                 'username': 'invalid_username_not_exists',
-                'password': 'invalid pwd'
+                'password': 'invalid pwd',
             },
             {
                 'username': user.username,
-                'password': 'invalid pwd'
-            }
+                'password': 'invalid pwd',
+            },
         )
         field = 'detail'
         for data in invalid_data:
@@ -72,7 +73,7 @@ class TestJWT:
         url = self.url_create
         valid_data = {
             'username': user.username,
-            'password': '1234567'
+            'password': '1234567',
         }
         response = client.post(url, data=valid_data)
         assert response.status_code == HTTPStatus.OK, (
@@ -89,7 +90,7 @@ class TestJWT:
 
     def test_jwt_refresh__invalid_request_data(self, client):
         invalid_data = {
-            'refresh': 'invalid token'
+            'refresh': 'invalid token',
         }
         fields_expected = ['detail', 'code']
         self.check_request_with_invalid_data(
@@ -100,7 +101,7 @@ class TestJWT:
         url = self.url_refresh
         valid_data = {
             'username': user.username,
-            'password': '1234567'
+            'password': '1234567',
         }
         response = client.post(self.url_create, data=valid_data)
         token_refresh = response.json().get('refresh')
@@ -118,7 +119,7 @@ class TestJWT:
 
     def test_jwt_verify__invalid_request_data(self, client):
         invalid_data = {
-            'token': 'invalid token'
+            'token': 'invalid token',
         }
         fields_expected = ['detail', 'code']
         self.check_request_with_invalid_data(
@@ -129,13 +130,15 @@ class TestJWT:
         url = self.url_verify
         valid_data = {
             'username': user.username,
-            'password': '1234567'
+            'password': '1234567',
         }
         response = client.post(self.url_create, data=valid_data)
         response_data = response.json()
 
-        for token in (response_data.get('access'),
-                      response_data.get('refresh')):
+        for token in (
+            response_data.get('access'),
+            response_data.get('refresh'),
+        ):
             response = client.post(url, data={'token': token})
             assert response.status_code == HTTPStatus.OK, (
                 'Убедитесь, что POST-запрос с корректными данными, '

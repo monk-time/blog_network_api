@@ -7,7 +7,6 @@ from posts.models import Group
 
 @pytest.mark.django_db(transaction=True)
 class TestGroupAPI:
-
     group_url = '/api/v1/groups/'
     group_detail_url = '/api/v1/groups/{group_id}/'
 

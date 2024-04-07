@@ -58,7 +58,7 @@ class Follow(models.Model):
     )
 
     class Meta:
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
                 name='unique_follow',
                 fields=['user', 'following'],
@@ -67,7 +67,7 @@ class Follow(models.Model):
                 name='cant_subscribe_to_self',
                 check=~models.Q(user=models.F('following')),
             ),
-        ]
+        )
 
     def __str__(self):
         return f'{self.user.username} -> {self.following.username}'

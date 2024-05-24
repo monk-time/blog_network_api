@@ -124,11 +124,8 @@ class TestCommentAPI:
         except ValueError as error:
             raise AssertionError(
                 assert_msg
-                + (
-                    '\nВ процессе выполнения запроса произошла ошибка: '
-                    f'{error}'
-                )
-            )
+                + f'\nВ процессе выполнения запроса произошла ошибка: {error}'
+            ) from error
         assert response.status_code == HTTPStatus.UNAUTHORIZED, assert_msg
         assert comment_cnt == Comment.objects.count(), (
             'Проверьте, что POST-запрос неавторизованного пользователя, '
@@ -155,8 +152,8 @@ class TestCommentAPI:
         except IntegrityError as error:
             raise AssertionError(
                 assert_msg
-                + (f' В процессе выполнения запроса произошла ошибка: {error}')
-            )
+                + f' В процессе выполнения запроса произошла ошибка: {error}'
+            ) from error
         assert response.status_code == HTTPStatus.CREATED, assert_msg
 
         test_data = response.json()

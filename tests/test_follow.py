@@ -28,8 +28,8 @@ class TestFollowAPI:
         except TypeError as error:
             raise AssertionError(
                 assert_msg
-                + (f' В процессе выполнения запроса произошла ошибка: {error}')
-            )
+                + f' В процессе выполнения запроса произошла ошибка: {error}'
+            ) from error
         assert response.status_code == HTTPStatus.UNAUTHORIZED, assert_msg
 
         data = {}
@@ -105,8 +105,8 @@ class TestFollowAPI:
         except IntegrityError as error:
             raise AssertionError(
                 assert_msg
-                + (f' В процессе выполнения запроса произошла ошибка: {error}')
-            )
+                + f' В процессе выполнения запроса произошла ошибка: {error}'
+            ) from error
         assert response.status_code == HTTPStatus.CREATED, assert_msg
         test_data = response.json()
 
@@ -147,8 +147,8 @@ class TestFollowAPI:
         except IntegrityError as error:
             raise AssertionError(
                 assert_msg
-                + (f' В процессе выполнения запроса произошла ошибка: {error}')
-            )
+                + f' В процессе выполнения запроса произошла ошибка: {error}'
+            ) from error
         assert response.status_code == HTTPStatus.BAD_REQUEST, assert_msg
 
         data = {'following': user.username}

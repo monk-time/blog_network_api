@@ -158,8 +158,8 @@ class TestPostAPI:
         except IntegrityError as error:
             raise AssertionError(
                 assert_msg
-                + (f' В процессе выполнения запроса произошла ошибка: {error}')
-            )
+                + f' В процессе выполнения запроса произошла ошибка: {error}'
+            ) from error
         assert response.status_code == HTTPStatus.CREATED, assert_msg
         post_count += 1
 
@@ -217,11 +217,8 @@ class TestPostAPI:
         except ValueError as error:
             raise AssertionError(
                 assert_msg
-                + (
-                    '\nВ процессе выполнения запроса произошла ошибка: '
-                    f'{error}'
-                )
-            )
+                + f'\nВ процессе выполнения запроса произошла ошибка: {error}'
+            ) from error
         assert response.status_code == HTTPStatus.UNAUTHORIZED, assert_msg
 
         assert posts_conut == Post.objects.count(), (

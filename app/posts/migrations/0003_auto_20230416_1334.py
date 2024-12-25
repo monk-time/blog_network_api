@@ -42,6 +42,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='follow',
-            constraint=models.CheckConstraint(check=models.Q(('user', django.db.models.expressions.F('following')), _negated=True), name='cant_subscribe_to_self'),
+            constraint=models.CheckConstraint(condition=models.Q(('user', django.db.models.expressions.F('following')), _negated=True), name='cant_subscribe_to_self'),
         ),
     ]

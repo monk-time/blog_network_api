@@ -122,12 +122,12 @@ class TestFollowAPI:
                 'содержит некорректное значение.'
             )
         )
-        assert (
-            test_data.get('following') == data['following']
-        ), msg_error.format(
-            additional_msg=(
-                'Сейчас ключ `following` отсутствует или '
-                'содержит некорректное значение.'
+        assert test_data.get('following') == data['following'], (
+            msg_error.format(
+                additional_msg=(
+                    'Сейчас ключ `following` отсутствует или '
+                    'содержит некорректное значение.'
+                )
             )
         )
         assert follow_count + 1 == Follow.objects.count(), (

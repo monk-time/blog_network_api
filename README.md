@@ -13,25 +13,16 @@ API написан на Django/DRF, для управления пользова
     cd blog_network_api
     ```
 
-2. Cоздайте и активируйте виртуальное окружение:
+2. Cоздайте виртуальное окружение и установите зависимости:
     ```bash
-    python3 -m venv venv
-    # Для Linux/macOS:
-    source venv/bin/activate
-    # Для Windows:
-    source venv/Scripts/activate
-    ```
-
-3. Установите зависимости из файла requirements.txt:
-    ```bash
-    python3 -m pip install --upgrade pip
-    pip install -r requirements.txt
+    uv sync
     ```
 
 4. Выполните миграции и запустите проект:
     ```bash
-    python3 manage.py migrate
-    python3 manage.py runserver
+    cd add
+    uv run manage.py migrate
+    uv run manage.py runserver
     ```
 
 ### Примеры запросов
